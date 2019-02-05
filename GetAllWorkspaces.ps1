@@ -8,4 +8,5 @@ Export-Csv -InputObject $workspaces -NoTypeInformation -Path "$($OutPath)workspa
 
 Write-Host "Total Number of Workspaces: $($workspaces.Count)`n"
 Disconnect-PowerBIServiceAccount
+
 Read-Host "Press any key when complete."
