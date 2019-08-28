@@ -3,7 +3,7 @@
 
 Login-PowerBIServiceAccount
 
-Get-PowerBIReport -Scope Individual | Export-Csv "C:\temp\Power BI\pbi_reports.csv"
+Get-PowerBIReport -Scope Individual | Export-Csv "C:\temp\Power BI\pbi_reports.csv" -NoTypeInformation
 
 $pbiReports = Get-PowerBIReport -Scope Organization
 
