@@ -1,17 +1,17 @@
-# Exports all Power BI reports within the current organization
-# If you only want to export the reports you have access to change to -Scope Individual
-
 Login-PowerBIServiceAccount
 
-Get-PowerBIReport -Scope Individual | Export-Csv "C:\temp\Power BI\pbi_reports.csv" -NoTypeInformation
+$pbiWorkspaces = Get-PowerBIWorkspace -Scope Organization
 
-$pbiReports = Get-PowerBIReport -Scope Organization
+ForEach ($workspace in $pbiWorkspaces) {
 
-ForEach ($Result in $pbiReports) {
+    $pbiReports = Get-PowerBIReport -Scope Organization -WorkspaceId $workspace.Id
+    Write-Host "Current Workspace: $($workspace)"
 
-    Write-Host "Report Id: $($Result.Id) - Report Name: $($Result.Name)"
-    Export-PowerBIReport -Id $($Result.Id) -OutFile "C:\temp\Power BI\$($Result.Name).pbix"
-
+    ForEach ($report in $pbiReports) {
+        
+        Write-Host "Now Exporting Report: $($report.Name)"
+        Export-PowerBIReport -WorkspaceId $workspace.Id -Id $report.Id -OutFile "C:\temp\Power BI\$($report.Name).pbix" 
+    }
 }
 
 Logout-PowerBIServiceAccount
