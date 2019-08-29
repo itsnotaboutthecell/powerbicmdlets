@@ -1,6 +1,7 @@
 Login-PowerBIServiceAccount
 
 $pbiWorkspaces = Get-PowerBIWorkspace -Scope Organization
+Write-Host "Total Number of Workspaces: $($pbiWorkspaces.Count)`n"
 
 ForEach ($workspace in $pbiWorkspaces) {
 
