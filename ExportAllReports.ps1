@@ -10,8 +10,13 @@ ForEach ($workspace in $pbiWorkspaces) {
 
     ForEach ($report in $pbiReports) {
         
-        Write-Host "Now Exporting Report: $($report.Name)"
-        Export-PowerBIReport -WorkspaceId $workspace.Id -Id $report.Id -OutFile "C:\temp\Power BI\$($report.Name).pbix" 
+        if (Test-Path "C:\temp\Power BI\$($report.Name).pbix" ) {
+                Write-Host "File $($report.Name).pbix Already Exists in Current Directory"
+        }
+        else {
+                Write-Host "Now Exporting Report: $($report.Name)"
+                Export-PowerBIReport -WorkspaceId $workspace.Id -Id $report.Id -OutFile "C:\temp\Power BI\$($report.Name).pbix" 
+        }
     }
 }
 
