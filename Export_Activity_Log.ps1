@@ -1,4 +1,7 @@
 <# 
+    Notes:
+    Maximum date range is 90 days, this script is offset to start from the previous day, making this solution's max value 89.
+    
     Refer to examples for using ServicePrincipal in the MS Docs:
     https://docs.microsoft.com/en-us/powershell/module/MicrosoftPowerBIMgmt.Profile/Connect-PowerBIServiceAccount?view=powerbi-ps
 #>
