@@ -69,8 +69,8 @@ ForEach ($v1User in $V1Users) {
         $mail.To = $v1User.UserId
         $mail.Subject = 'Action Required: Upgrade Power BI Workspace(s)'
         $mail.HtmlBody = (Compare-Object -ReferenceObject $existingWorkspaces -DifferenceObject $V1Workspaces -Property 'WorkspaceId' -IncludeEqual -ExcludeDifferent -PassThru |
-                ForEach ` { $_ | Select Name, WorkspaceId, @{l="URL";e={"https://ddec1-0-en-ctp.trendmicro.com:443/wis/clicktime/v1/query?url=https%3a%2f%2fapp.powerbi.com%2fgroups%2f&umid=874631f4-a2ec-49b0-86ed-9e5bb484c040&auth=65a620fa4b6e2edf0405a6ed61dc7465231096cd-5450d311e70f7751b1de5436ba6c3e3f8e20330b$($_.WorkspaceId)"}}} | 
-                ConvertTo-HTML -Title 'Power BI Workspace Upgrade' -Body "The following Power BI workspace(s) are currently out of compliance. Please visit the URL(s) below to upgrade now.<br><br>For instructions on how to upgrade classic workspaces to the new workspace experience, <a href=https://ddec1-0-en-ctp.trendmicro.com:443/wis/clicktime/v1/query?url=https%3a%2f%2fdocs.microsoft.com%2fen%2dus%2fpower%2dbi%2fdesigner%2fservice%2dupgrade%2dworkspaces%3eclick&umid=8a3e0ca7-9b90-481c-a86d-52d6842b1c29&auth=65a620fa4b6e2edf0405a6ed61dc7465231096cd-cc0518f527e63f63f3164e539d3a098b70f9c03d here</a> to learn more.<br><br>" -PostContent "<br>Thank you in advance for your time and assistance." | Out-String )
+                ForEach ` { $_ | Select Name, WorkspaceId, @{l="URL";e={"https://app.powerbi.com/groups/$($_.WorkspaceId)"}}} | 
+                ConvertTo-HTML -Title 'Power BI Workspace Upgrade' -Body "The following Power BI workspace(s) are currently out of compliance. Please visit the URL(s) below to upgrade now.<br><br>For instructions on how to upgrade classic workspaces to the new workspace experience, <a href="https://docs.microsoft.com/en-us/power-bi/designer/service-upgrade-workspaces">click here to learn more.</a><br><br>" -PostContent "<br>Thank you in advance for your time and assistance." | Out-String )
         $mail.Importance = 2
  
         $mail.Send()
