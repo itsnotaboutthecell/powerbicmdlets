@@ -75,7 +75,7 @@ ForEach ($v1User in $V1Users) {
         $mail.Send()
  
         # give time to send the email
-        Start-Sleep 20
+        Start-Sleep 10
  
     }
 }
