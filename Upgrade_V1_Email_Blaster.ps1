@@ -1,5 +1,5 @@
 # Declare Variables
-$outPath = "C:\Power BI\Activity Logs\'
+$outPath = "C:\Power BI\Activity Logs\"
 $senderAddress = 'email@domain.com'
  
 # Gets Previous X Days Events – Max Value 89
@@ -15,7 +15,6 @@ $pbiEvents = # Create
                  'DeleteReport', 'DeleteDataset', 'DeleteDashboard'
  
 ############### SCRIPT BEGINS ###############
-
 Connect-PowerBIServiceAccount # -ServicePrincipal -Credential (Get-Credential)
  
 # Erorr Handling: outPath - Final character is forward slash and folder exists
@@ -70,7 +69,7 @@ ForEach ($v1User in $V1Users) {
         $mail.Subject = 'Action Required: Upgrade Power BI Workspace(s)'
         $mail.HtmlBody = (Compare-Object -ReferenceObject $existingWorkspaces -DifferenceObject $V1Workspaces -Property 'WorkspaceId' -IncludeEqual -ExcludeDifferent -PassThru |
                 ForEach ` { $_ | Select Name, WorkspaceId, @{l="URL";e={"https://app.powerbi.com/groups/$($_.WorkspaceId)"}}} | 
-                ConvertTo-HTML -Title 'Power BI Workspace Upgrade' -Body "The following Power BI workspace(s) are currently out of compliance. Please visit the URL(s) below to upgrade now.<br><br>For instructions on how to upgrade classic workspaces to the new workspace experience, <a href="https://docs.microsoft.com/en-us/power-bi/designer/service-upgrade-workspaces">click here to learn more.</a><br><br>" -PostContent "<br>Thank you in advance for your time and assistance." | Out-String )
+                ConvertTo-HTML -Title 'Power BI Workspace Upgrade' -Body 'The following Power BI workspace(s) are currently out of compliance. Please visit the URL(s) below to upgrade now.<br><br>For instructions on how to upgrade classic workspaces to the new workspace experience, <a href="https://docs.microsoft.com/en-us/power-bi/designer/service-upgrade-workspaces">click here to learn more.</a><br><br>' -PostContent "<br>Thank you in advance for your time and assistance." | Out-String )
         $mail.Importance = 2
  
         $mail.Send()
@@ -80,8 +79,6 @@ ForEach ($v1User in $V1Users) {
  
     }
 }
-
 # quit Outlook and exit script
 $o.Quit()
-
-exit 
+exit
